@@ -10,8 +10,6 @@ namespace ConwayGameOfLife
     {
         static void Main(string[] args)
         {
-            var cell = new Cell(2, 3, false);
-            cell.sayPosition();
             Console.ReadLine();
         }
     }
