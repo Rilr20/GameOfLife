@@ -11,6 +11,7 @@ namespace ConwayGameOfLife
 
 
         private List<int[]> cellList = new List<int[]>();
+        private List<int[]> coordinates = new List<int[]>();
 
         public void Cell(int x, int y, bool is_alive)
         {
@@ -57,7 +58,6 @@ namespace ConwayGameOfLife
 
             if (neighbourCells.Count < 2 || neighbourCells.Count > 3)
             {
-                //remove this cell from list
                 cellList.Remove(cell);
             }
         }
@@ -69,6 +69,21 @@ namespace ConwayGameOfLife
                 int[] newCell = { x, y, 1 };
                 cellList.Add(newCell);
             }
+        }
+        public List<int[]> adjacentCoordinates(int x, int y)
+        {
+            List<int[]> coordinates = new List<int[]>
+            {
+                new int[] { x - 1, y + 1 },
+                new int[] { x, y + 1 },
+                new int[] { x + 1, y + 1 },
+                new int[] { x - 1, y },
+                new int[] { x + 1, y },
+                new int[] { x - 1, y - 1 },
+                new int[] { x, y - 1 },
+                new int[] { x + 1, y - 1 }
+            };
+            return coordinates;
         }
     }
 }
