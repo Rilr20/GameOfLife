@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ConwayGameOfLife
 {
-    internal class Cells
+    public class Cells
     {
 
 
@@ -17,11 +17,15 @@ namespace ConwayGameOfLife
         {
             cellList.Add(new int[] { x, y, (is_alive) ? 1 : 0 });
         }
-        public void simulate()
+        public void Simulate()
         {
-
+            List<int[]> newCellList = new List<int[]>();
+            foreach (int[] cell in cellList)
+            {
+                //update it and
+            }
         }
-        public List<int[]> findSurroundingCells(int x, int y)
+        public List<int[]> FindSurroundingCells(int x, int y)
         {
             /*
                 [x-1, y+1] [x, y+1] [x+1, y+1]
@@ -46,7 +50,7 @@ namespace ConwayGameOfLife
 
             return surroundingCells;
         }
-        public void cellStatus(int[] cell)
+        public void CellStatus(int[] cell)
         {
             /**
              * Any live cell with fewer than two live neighbors dies, as if by underpopulation.
@@ -54,23 +58,28 @@ namespace ConwayGameOfLife
              * Any live cell with more than three live neighbors dies, as if by overpopulation.
              * Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
              **/
-            List<int[]> neighbourCells = findSurroundingCells(cell[0], cell[1]);
+            List<int[]> neighbourCells = FindSurroundingCells(cell[0], cell[1]);
 
             if (neighbourCells.Count < 2 || neighbourCells.Count > 3)
             {
                 cellList.Remove(cell);
             }
         }
-        public void newCells(int x, int y)
+        public void NewCell(int x, int y)
         {
-            List<int[]> neighbourCells = findSurroundingCells(x, y);
+            int[] cell = { x, y, 1 };
+            cellList.Add(cell);
+        }
+        public void NewCells(int x, int y)
+        {
+            List<int[]> neighbourCells = FindSurroundingCells(x, y);
             if (neighbourCells.Count == 3)
             {
                 int[] newCell = { x, y, 1 };
                 cellList.Add(newCell);
             }
         }
-        public List<int[]> adjacentCoordinates(int x, int y)
+        public List<int[]> AdjacentCoordinates(int x, int y)
         {
             List<int[]> coordinates = new List<int[]>
             {
@@ -84,6 +93,19 @@ namespace ConwayGameOfLife
                 new int[] { x + 1, y - 1 }
             };
             return coordinates;
+        }
+        public void Print()
+        {
+            Console.Clear();
+            foreach (int[] cell in cellList)
+            {
+                Console.SetCursorPosition(cell[0], cell[1]);
+                if (cell[2] == 1)
+                {
+                    Console.WriteLine("█");
+                }
+
+            }
         }
     }
 }
