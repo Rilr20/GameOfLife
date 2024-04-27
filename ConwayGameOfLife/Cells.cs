@@ -14,6 +14,7 @@ namespace ConwayGameOfLife
         //private List<int[]> cellList = new List<int[]>();
         //private List<int[]> coordinates = new List<int[]>();
         private Hashtable cells = new Hashtable();
+
         public void Cell(int x, int y, bool is_alive)
         {
             //cellList.Add(new int[] { x, y, (is_alive) ? 1 : 0 });
@@ -26,8 +27,13 @@ namespace ConwayGameOfLife
             foreach (DictionaryEntry cell in cells)
             {
                 //update it and check neighbours
-                CellStatus(cell, cell.Key.ToString());
-                
+                bool status = CellStatus(cell, cell.Key.ToString());
+                if  (status && !newCells.Contains(cell.Key))
+                {
+                   newCells.Add(cell.Key, cell.Value);
+                }
+                List<int[]> adjacent = AdjacentCoordinates(cell.Key.ToString());
+                NewCells(adjacent, newCells);
             }
             cells = newCells;
         }
@@ -41,23 +47,18 @@ namespace ConwayGameOfLife
             Hashtable surroundingCells = new Hashtable();
             int[] x_positions = { x - 1, x, x + 1 };
             int[] y_positions = { y - 1, y, y + 1 };
-
-
-            foreach (DictionaryEntry cell in cells)
+            List<int[]> coords = AdjacentCoordinates($"{x},{y}");
+            int foundCells = 0;
+            foreach (int[] coord in coords)
             {
-                string[] coordinates = cell.Key.ToString().Split(',');
-                if (x_positions.Contains(Convert.ToInt32(coordinates[0])) && y_positions.Contains(Convert.ToInt32(coordinates[1])))
+                if (cells.Contains($"{coord[0]},{coord[1]}"))
                 {
-                    if (Convert.ToInt32(coordinates[0]) != x && Convert.ToInt32(coordinates[1]) != y)
-                    {
-                        surroundingCells.Add(cell.Key, cell.Value);
-                    }
+                    surroundingCells.Add($"{coord[0]},{coord[1]}", cells[$"{coord[0]},{coord[1]}"]);
+                    foundCells++;
                 }
             }
-
-            return surroundingCells;
         }
-        public void CellStatus(DictionaryEntry cell, string key)
+        public bool CellStatus(DictionaryEntry cell, string key)
         {
             /**
              * Any live cell with fewer than two live neighbors dies, as if by underpopulation.
@@ -69,28 +70,33 @@ namespace ConwayGameOfLife
             Hashtable neighbourCells = FindSurroundingCells(Convert.ToInt32(coordinates[0]), Convert.ToInt32(coordinates[1]));
             if (neighbourCells.Count < 2 || neighbourCells.Count > 3)
             {
-                cells.Remove(key);
+                //cells.Remove(key);
+                return false;
             }
+            return true;
         }
         public void NewCell(int x, int y)
         {
-            //int[] cell = { x, y, 1 };
-            //cellList.Add(cell);
             cells.Add($"{x},{y}", true);
         }
-        public void NewCells(int x, int y)
+        public void NewCells(List<int[]> coordinates, Hashtable celltable)
         {
-            Hashtable neighbourCells = FindSurroundingCells(x, y);
-            if (neighbourCells.Count == 3)
+            foreach (int[] coordinate in coordinates)
             {
-                //int[] newCell = { x, y, 1 };
-                //cellList.Add(newCell);
-                cells.Add($"{x},{y}", true);
+                Hashtable neighbourCells = FindSurroundingCells(coordinate[0], coordinate[1]);
+                if (!celltable.Contains($"{coordinate[0]},{coordinate[1]}") && neighbourCells.Count == 3)
+                {
+                    celltable.Add($"{coordinate[0]},{coordinate[1]}", true);
+                }
+
             }
         }
-        public List<int[]> AdjacentCoordinates(int x, int y)
+        public List<int[]> AdjacentCoordinates(string position)
         {
-            List<int[]> coordinates = new List<int[]>
+            string[] coordinates = position.Split(',');
+            int x = Convert.ToInt32(coordinates[0]);
+            int y = Convert.ToInt32(coordinates[1]);
+            return new List<int[]>
             {
                 new int[] { x - 1, y + 1 },
                 new int[] { x, y + 1 },
@@ -101,7 +107,6 @@ namespace ConwayGameOfLife
                 new int[] { x, y - 1 },
                 new int[] { x + 1, y - 1 }
             };
-            return coordinates;
         }
         public void Print()
         {
