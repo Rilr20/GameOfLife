@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Collections;
 
 namespace ConwayGameOfLife
 {
@@ -10,47 +11,53 @@ namespace ConwayGameOfLife
     {
 
 
-        private List<int[]> cellList = new List<int[]>();
-        private List<int[]> coordinates = new List<int[]>();
-
+        //private List<int[]> cellList = new List<int[]>();
+        //private List<int[]> coordinates = new List<int[]>();
+        private Hashtable cells = new Hashtable();
         public void Cell(int x, int y, bool is_alive)
         {
-            cellList.Add(new int[] { x, y, (is_alive) ? 1 : 0 });
+            //cellList.Add(new int[] { x, y, (is_alive) ? 1 : 0 });
+            cells.Add($"{x},{y}", is_alive);
         }
         public void Simulate()
         {
-            List<int[]> newCellList = new List<int[]>();
-            foreach (int[] cell in cellList)
+            //List<int[]> newCellList = new List<int[]>();
+            Hashtable newCells = new Hashtable();
+            foreach (DictionaryEntry cell in cells)
             {
-                //update it and
+                //update it and check neighbours
+                CellStatus(cell, cell.Key.ToString());
+                
             }
+            cells = newCells;
         }
-        public List<int[]> FindSurroundingCells(int x, int y)
+        public Hashtable FindSurroundingCells(int x, int y)
         {
             /*
                 [x-1, y+1] [x, y+1] [x+1, y+1]
                 [x-1, y  ] [x, y  ] [ x+1,y  ]
                 [x-1, y-1] [x,y-1 ] [x+1, y-1]
              */
-            List<int[]> surroundingCells = new List<int[]>();
+            Hashtable surroundingCells = new Hashtable();
             int[] x_positions = { x - 1, x, x + 1 };
             int[] y_positions = { y - 1, y, y + 1 };
 
 
-            foreach (int[] cell in cellList)
+            foreach (DictionaryEntry cell in cells)
             {
-                if (x_positions.Contains(cell[0]) && y_positions.Contains(cell[1]))
+                string[] coordinates = cell.Key.ToString().Split(',');
+                if (x_positions.Contains(Convert.ToInt32(coordinates[0])) && y_positions.Contains(Convert.ToInt32(coordinates[1])))
                 {
-                    if (cell[0] != x && cell[1] != y)
+                    if (Convert.ToInt32(coordinates[0]) != x && Convert.ToInt32(coordinates[1]) != y)
                     {
-                        surroundingCells.Add(cell);
+                        surroundingCells.Add(cell.Key, cell.Value);
                     }
                 }
             }
 
             return surroundingCells;
         }
-        public void CellStatus(int[] cell)
+        public void CellStatus(DictionaryEntry cell, string key)
         {
             /**
              * Any live cell with fewer than two live neighbors dies, as if by underpopulation.
@@ -58,25 +65,27 @@ namespace ConwayGameOfLife
              * Any live cell with more than three live neighbors dies, as if by overpopulation.
              * Any dead cell with exactly three live neighbors becomes a live cell, as if by reproduction.
              **/
-            List<int[]> neighbourCells = FindSurroundingCells(cell[0], cell[1]);
-
+            string[] coordinates = cell.Key.ToString().Split(',');
+            Hashtable neighbourCells = FindSurroundingCells(Convert.ToInt32(coordinates[0]), Convert.ToInt32(coordinates[1]));
             if (neighbourCells.Count < 2 || neighbourCells.Count > 3)
             {
-                cellList.Remove(cell);
+                cells.Remove(key);
             }
         }
         public void NewCell(int x, int y)
         {
-            int[] cell = { x, y, 1 };
-            cellList.Add(cell);
+            //int[] cell = { x, y, 1 };
+            //cellList.Add(cell);
+            cells.Add($"{x},{y}", true);
         }
         public void NewCells(int x, int y)
         {
-            List<int[]> neighbourCells = FindSurroundingCells(x, y);
+            Hashtable neighbourCells = FindSurroundingCells(x, y);
             if (neighbourCells.Count == 3)
             {
-                int[] newCell = { x, y, 1 };
-                cellList.Add(newCell);
+                //int[] newCell = { x, y, 1 };
+                //cellList.Add(newCell);
+                cells.Add($"{x},{y}", true);
             }
         }
         public List<int[]> AdjacentCoordinates(int x, int y)
@@ -97,10 +106,13 @@ namespace ConwayGameOfLife
         public void Print()
         {
             Console.Clear();
-            foreach (int[] cell in cellList)
+            foreach (DictionaryEntry cell in cells)
             {
-                Console.SetCursorPosition(cell[0], cell[1]);
-                if (cell[2] == 1)
+                string[] coordinates = cell.Key.ToString().Split(',');
+
+                Console.SetCursorPosition(Convert.ToInt32(coordinates[0]), Convert.ToInt32(coordinates[1]));
+
+                if ((bool)cell.Value == true)
                 {
                     Console.WriteLine("█");
                 }
