@@ -11,10 +11,9 @@ namespace ConwayGameOfLife
     {
         static void Main(string[] args)
         {
-            PrintHelp();
             bool runninng = true;
-            Cells cells = new Cells();
 
+            Cells cells = new Cells();
             while (runninng)
             {
                 string Input = Console.ReadLine();
@@ -29,6 +28,7 @@ namespace ConwayGameOfLife
                         string cellCoords = Console.ReadLine();
                         string[] splitString = cellCoords.Split(' ');
                         cells.NewCell(Convert.ToInt32(splitString[0]), Convert.ToInt32(splitString[1]));
+                        cells.Print();
                         break;
                     case "S":
                         cells.Simulate();
