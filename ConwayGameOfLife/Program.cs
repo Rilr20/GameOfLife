@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -13,6 +14,7 @@ namespace ConwayGameOfLife
             PrintHelp();
             bool runninng = true;
             Cells cells = new Cells();
+
             while (runninng)
             {
                 string Input = Console.ReadLine();
@@ -26,10 +28,10 @@ namespace ConwayGameOfLife
                         Console.WriteLine("X Y");
                         string cellCoords = Console.ReadLine();
                         string[] splitString = cellCoords.Split(' ');
-                        cells.NewCell(Convert.ToInt32(splitString[0]),Convert.ToInt32(splitString[1]));
+                        cells.NewCell(Convert.ToInt32(splitString[0]), Convert.ToInt32(splitString[1]));
                         break;
                     case "S":
-                        //cells.Simulate();
+                        cells.Simulate();
                         cells.Print();
                         break;
                     case "Q":
