@@ -9,20 +9,16 @@ namespace ConwayGameOfLife
 {
     public class Cells
     {
-
-
-        //private List<int[]> cellList = new List<int[]>();
-        //private List<int[]> coordinates = new List<int[]>();
         private Hashtable cells = new Hashtable();
 
         public void Cell(int x, int y, bool is_alive)
         {
-            //cellList.Add(new int[] { x, y, (is_alive) ? 1 : 0 });
+
             cells.Add($"{x},{y}", is_alive);
         }
         public void Simulate()
         {
-            //List<int[]> newCellList = new List<int[]>();
+
             Hashtable newCells = new Hashtable();
             foreach (DictionaryEntry cell in cells)
             {
@@ -57,6 +53,7 @@ namespace ConwayGameOfLife
                     foundCells++;
                 }
             }
+            return surroundingCells;
         }
         public bool CellStatus(DictionaryEntry cell, string key)
         {
@@ -70,13 +67,13 @@ namespace ConwayGameOfLife
             Hashtable neighbourCells = FindSurroundingCells(Convert.ToInt32(coordinates[0]), Convert.ToInt32(coordinates[1]));
             if (neighbourCells.Count < 2 || neighbourCells.Count > 3)
             {
-                //cells.Remove(key);
                 return false;
             }
             return true;
         }
         public void NewCell(int x, int y)
         {
+
             cells.Add($"{x},{y}", true);
         }
         public void NewCells(List<int[]> coordinates, Hashtable celltable)
@@ -86,6 +83,7 @@ namespace ConwayGameOfLife
                 Hashtable neighbourCells = FindSurroundingCells(coordinate[0], coordinate[1]);
                 if (!celltable.Contains($"{coordinate[0]},{coordinate[1]}") && neighbourCells.Count == 3)
                 {
+
                     celltable.Add($"{coordinate[0]},{coordinate[1]}", true);
                 }
 
