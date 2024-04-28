@@ -1,8 +1,0 @@
-D:\Users\BrödKatt\Desktop\hemsidor\ConwayGameOfLife\ConwayGameOfLife\ConwayGameOfLife\bin\Debug\ConwayGameOfLife.exe.config
-D:\Users\BrödKatt\Desktop\hemsidor\ConwayGameOfLife\ConwayGameOfLife\ConwayGameOfLife\bin\Debug\ConwayGameOfLife.exe
-D:\Users\BrödKatt\Desktop\hemsidor\ConwayGameOfLife\ConwayGameOfLife\ConwayGameOfLife\bin\Debug\ConwayGameOfLife.pdb
-D:\Users\BrödKatt\Desktop\hemsidor\ConwayGameOfLife\ConwayGameOfLife\ConwayGameOfLife\obj\Debug\ConwayGameOfLife.csproj.AssemblyReference.cache
-D:\Users\BrödKatt\Desktop\hemsidor\ConwayGameOfLife\ConwayGameOfLife\ConwayGameOfLife\obj\Debug\ConwayGameOfLife.csproj.SuggestedBindingRedirects.cache
-D:\Users\BrödKatt\Desktop\hemsidor\ConwayGameOfLife\ConwayGameOfLife\ConwayGameOfLife\obj\Debug\ConwayGameOfLife.csproj.CoreCompileInputs.cache
-D:\Users\BrödKatt\Desktop\hemsidor\ConwayGameOfLife\ConwayGameOfLife\ConwayGameOfLife\obj\Debug\ConwayGameOfLife.exe
-D:\Users\BrödKatt\Desktop\hemsidor\ConwayGameOfLife\ConwayGameOfLife\ConwayGameOfLife\obj\Debug\ConwayGameOfLife.pdb
