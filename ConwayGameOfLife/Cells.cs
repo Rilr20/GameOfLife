@@ -10,7 +10,8 @@ namespace ConwayGameOfLife
     public class Cells
     {
         private Hashtable cells = new Hashtable();
-
+        public int width = 120;
+        public int height = 30;
         public void Cell(int x, int y, bool is_alive)
         {
 
@@ -108,19 +109,24 @@ namespace ConwayGameOfLife
         }
         public void Print()
         {
-            Console.Clear();
-            foreach (DictionaryEntry cell in cells)
+            StringBuilder output = new StringBuilder();
+            for (int row = 0; row < height; row++)
             {
-                string[] coordinates = cell.Key.ToString().Split(',');
-
-                Console.SetCursorPosition(Convert.ToInt32(coordinates[0]), Convert.ToInt32(coordinates[1]));
-
-                if ((bool)cell.Value == true)
+                for(int column = 0; column < width; column++ )
                 {
-                    Console.WriteLine("█");
-                }
+                    if (cells.Contains($"{column},{row}"))
+                    {
+                        output.Append("█");
 
+                    }
+                    else
+                    {
+                        output.Append("_");
+                    }
+                }
             }
+            Console.Clear();
+            Console.WriteLine(output);
         }
     }
 }
