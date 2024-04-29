@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace ConwayGameOfLife
@@ -14,6 +15,11 @@ namespace ConwayGameOfLife
             bool runninng = true;
 
             Cells cells = new Cells();
+            cells.NewCell(11, 21);
+            cells.NewCell(12, 21);
+            cells.NewCell(13, 21);
+            cells.NewCell(13, 22);
+            cells.NewCell(12, 23);
             while (runninng)
             {
                 string Input = Console.ReadLine();
@@ -31,8 +37,21 @@ namespace ConwayGameOfLife
                         cells.Print();
                         break;
                     case "S":
-                        cells.Simulate();
-                        cells.Print();
+                        Console.WriteLine("Specify amount of iteration");
+                        int nums = 1;
+                        try
+                        {
+                            nums  = Convert.ToInt32(Console.ReadLine());
+                        } 
+                        catch(Exception) {
+                        }
+
+                        for (int i = 0; i < nums; i++)
+                        {
+                            cells.Simulate();
+                            cells.Print();
+                            Thread.Sleep(500);
+                        }
                         break;
                     case "Q":
                         runninng = false;
