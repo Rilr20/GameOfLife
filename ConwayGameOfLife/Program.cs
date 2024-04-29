@@ -15,11 +15,6 @@ namespace ConwayGameOfLife
             bool runninng = true;
 
             Cells cells = new Cells();
-            cells.NewCell(11, 21);
-            cells.NewCell(12, 21);
-            cells.NewCell(13, 21);
-            cells.NewCell(13, 22);
-            cells.NewCell(12, 23);
             while (runninng)
             {
                 string Input = Console.ReadLine();
