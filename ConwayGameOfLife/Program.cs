@@ -25,11 +25,18 @@ namespace ConwayGameOfLife
                         PrintHelp();
                         break;
                     case "A":
-                        Console.WriteLine("X Y");
-                        string cellCoords = Console.ReadLine();
-                        string[] splitString = cellCoords.Split(' ');
-                        cells.NewCell(Convert.ToInt32(splitString[0]), Convert.ToInt32(splitString[1]));
-                        cells.Print();
+                        try
+                        {
+                            Console.WriteLine("X Y");
+                            string cellCoords = Console.ReadLine();
+                            string[] splitString = cellCoords.Split(' ');
+                            cells.NewCell(Convert.ToInt32(splitString[0]), Convert.ToInt32(splitString[1]));
+                            cells.Print();
+
+                        } catch (Exception)
+                        {
+                            Console.WriteLine("incorrect format or non numerals entered");
+                        }
                         break;
                     case "S":
                         Console.WriteLine("Specify amount of iteration");
