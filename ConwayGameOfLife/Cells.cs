@@ -74,15 +74,17 @@ namespace ConwayGameOfLife
         }
         public void NewCell(int x, int y)
         {
-
-            cells.Add($"{x},{y}", true);
+            if (x >= 0 && y >= 0)
+            {
+                cells.Add($"{x},{y}", true);
+            }
         }
         public void NewCells(List<int[]> coordinates, Hashtable celltable)
         {
             foreach (int[] coordinate in coordinates)
             {
                 Hashtable neighbourCells = FindSurroundingCells(coordinate[0], coordinate[1]);
-                if (!celltable.Contains($"{coordinate[0]},{coordinate[1]}") && neighbourCells.Count == 3)
+                if (coordinate[0] >= 0 && coordinate[1] >= 0 && !celltable.Contains($"{coordinate[0]},{coordinate[1]}") && neighbourCells.Count == 3)
                 {
 
                     celltable.Add($"{coordinate[0]},{coordinate[1]}", true);
