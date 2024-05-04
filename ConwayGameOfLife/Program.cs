@@ -30,9 +30,14 @@ namespace ConwayGameOfLife
                             Console.WriteLine("X Y");
                             string cellCoords = Console.ReadLine();
                             string[] splitString = cellCoords.Split(' ');
-                            cells.NewCell(Convert.ToInt32(splitString[0]), Convert.ToInt32(splitString[1]));
-                            cells.Print();
-
+                            if (Convert.ToInt32(splitString[0]) < 0 || Convert.ToInt32(splitString[1]) < 0)
+                            {
+                                Console.WriteLine("Can't be less than zero");
+                            } else
+                            {
+                                cells.NewCell(Convert.ToInt32(splitString[0]), Convert.ToInt32(splitString[1]));
+                                cells.Print();
+                            }
                         } catch (Exception)
                         {
                             Console.WriteLine("incorrect format or non numerals entered");
